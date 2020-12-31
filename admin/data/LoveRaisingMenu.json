@@ -6,7 +6,7 @@
 	"href": "view/console/console1.html"
 	},
 	{
-		"id": 1,
+		"id":"raising",
 		"title": "筹款管理",
 		"type": 0,
 		"icon": "layui-icon layui-icon-console",
@@ -17,7 +17,7 @@
 			"icon": "layui-icon layui-icon-console",
 			"type": 1,
 			"openType": "_iframe",
-			"href": "view/console/console1.html"
+			"href": "view/raising/raising.html"
 		}, {
 			"id": 13,
 			"title": "发起筹款",
@@ -121,7 +121,7 @@
 		"title": "消息管理",
 		"icon": "layui-icon layui-icon-face-cry",
 		"type": 1,
-		"href": "view/system/news/news.html"
+		"href": "view/news/news.html"
 	},
 	{
 		"id": "notice",
@@ -135,7 +135,7 @@
 			"icon": "layui-icon layui-icon-face-smile",
 			"type": 1,
 			"openType": "_iframe",
-			"href": "view/system/notice/notice.html"
+			"href": "view/notice/notice.html"
 		}, {
 			"id": 702,
 			"title": "空白页面",
