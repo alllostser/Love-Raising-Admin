@@ -5,6 +5,12 @@
 		<title></title>
 		<link rel="stylesheet" href="../../component/pear/css/pear.css" />
 	</head>
+	<style>
+		.layui-table-cell{
+			height: 100% !important;
+			line-height: 100% !important;
+		}
+	</style>
 	<body>
 		<body class="pear-container">
 			<div class="layui-card">
@@ -72,19 +78,22 @@
 		    {{# }else if(d.sex == 1){ }}
 		    <span>离线</span>
 		    {{# } }}
+			<img src="" alt="">
 		</script>
 
 		<script type="text/html" id="user-createTime">
 			{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd')}}
 		</script>
-
 		<script src="../../component/layui/layui.js"></script>
 		<script src="../../component/pear/pear.js"></script>
+		<script src="../../config/api.config.js"></script>
 		<script>
-			layui.use(['table', 'form', 'jquery'], function() {
+			layui.use(['table', 'form', 'jquery','context'], function() {
 				let table = layui.table;
 				let form = layui.form;
 				let $ = layui.jquery;
+				const context = layui.context;
+				var hostUrl = context.get("hostUrl")
 
 				let MODULE_PATH = "/system/user/";
 
@@ -93,39 +102,51 @@
 							type: 'checkbox'
 						},
 						{
-							title: '账号',
-							field: 'username',
+							title: '标题',
+							field: 'raisingTitle',
 							align: 'center',
-							width: 100
+							width: 250
 						},
 						{
-							title: '姓名',
-							field: 'realName',
+							title: '主图',
+							field: 'firstUrl',
+							rowspan: 6,
+							style:'height:90px',
+							width: 110,
+							templet: function (d){
+								return '<img  style="width: 85px;height: 85px;" src="'+hostUrl+d.firstUrl+'" alt="">'
+							},
+							align: 'center',
+						},
+						{
+							title: '筹款描述',
+							field: 'raisingDescription',
+							align: 'center',
+						},
+						{
+							title: '筹款人',
+							field: 'raisingName',
+							align: 'center',
+							//width: 100
+						},
+						{
+							title: '筹款金额',
+							field: 'targetAmount',
+							align: 'center',
+							//width: 80,
+						},
+						{
+							title: '已筹金额',
+							field: 'currentAmount',
 							align: 'center'
 						},
 						{
-							title: '性别',
-							field: 'sex',
+							title: '状态',
+							field: 'statusId',
 							align: 'center',
-							width: 80,
-							templet: '#user-sex'
-						},
-						{
-							title: '电话',
-							field: 'phone',
-							align: 'center'
-						},
-						{
-							title: '启用',
-							field: 'enable',
-							align: 'center',
-							templet: '#user-enable'
-						},
-						{
-							title: '登录',
-							field: 'login',
-							align: 'center',
-							templet: '#user-login'
+							templet: function (d) {
+
+							}
 						},
 						{
 							title: '注册',
@@ -143,17 +164,27 @@
 				]
 
 				table.render({
+					id: 'idTest',
 					elem: '#user-table',
-					url: '../../admin/data/table.json',
+					url: hostUrl+'/raisinginfo/list.do',
+					height:1000,
+					request: {
+						pageName: 'current' ,//页码的参数名称，默认：page
+						limitName: 'size' //每页数据量的参数名，默认：limit
+					},
+					method:'get',
 					page: true,
 					cols: cols,
 					skin: 'line',
+					//size: 'lg',
+					//even: true, //开启隔行背景
 					toolbar: '#user-toolbar',
 					defaultToolbar: [{
 						layEvent: 'refresh',
 						icon: 'layui-icon-refresh',
 					}, 'filter', 'print', 'exports']
 				});
+				// table.resize('idTest');
 
 				table.on('tool(user-table)', function(obj) {
 					if (obj.event === 'remove') {
