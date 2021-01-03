@@ -37,27 +37,27 @@
 
     <div class="layui-form-item">
         <label class="layui-form-label required">筹款标题</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="text" name="raisingTitle" lay-verify="required" lay-reqtext="输入筹款标题" placeholder="输入筹款标题" value="" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">筹款描述</label>
-        <div class="layui-input-block">
+        <label class="layui-form-label required">筹款描述</label>
+        <div class="layui-input-inline">
             <input type="text" name="raisingDescription"   placeholder="请输入描述信息" value="" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label required">筹款金额</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="number" name="targetAmount" lay-verify="required" lay-reqtext="输入筹款金额" placeholder="请输入金额" value="" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">银行卡号</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="number" name="bankNum"  placeholder="请输入银行卡号" value="" class="layui-input">
         </div>
     </div>
@@ -71,20 +71,22 @@
 <!--    </div>-->
     <div class="layui-form-item">
         <label class="layui-form-label">筹款人姓名</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="text" name="raisingName"  placeholder="输入筹款人姓名" value="" class="layui-input">
         </div>
     </div>
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-        <legend>上传多张图片</legend>
+        <legend>上传副图</legend>
     </fieldset>
 
     <div class="layui-form-item">
-        <button type="button" class="layui-input-block layui-btn" id="test2">多图片上传</button>
-        <input class="layui-hide" name="imageUrls" type="text" id="imagurls">
+        <div class="layui-input-inline">
+            <input class="layui-hide" name="imageUrls" type="text" id="imagurls">
+        </div>
         <blockquote class="layui-input-block layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
-            预览图：
-            <div class="layui-upload-list" id="demo2"></div>
+
+<!--            <label class="layui-form-label required">预览图：</label>-->
+            <div class="layui-upload-list" id="demo2"> <button type="button" class="layui-btn" id="test2">+</button></div>
         </blockquote>
     </div>
     <div class="layui-form-item">
@@ -110,6 +112,8 @@
         upload.render({
             elem: '#pic' //绑定元素
             , url: hostUrl+"/file/upload.do" //上传接口
+            ,acceptMime: 'image/*'
+            ,exts: 'jpg|png|jpeg'
             , done: function (res) {
                 //上传完毕回调
                 if (res.code == 0) {
@@ -122,16 +126,31 @@
                 layer.msg("上传异常");
             }
         });
+        //json的length
+        function getJsonLength(jsonData){
+            var jsonLength = 0;
+            for(var item in jsonData){
+                jsonLength++;
+            }
+            return jsonLength;
+        }
         var imagesUrls = ""
         upload.render({
             elem: '#test2'
             ,url: hostUrl+'/file/upload.do' //改成您自己的上传接口
+            ,acceptMime: 'image/*'
+            ,exts: 'jpg|png|jpeg'
             ,multiple: true
+            ,number: 3
             ,before: function(obj){
                 //预读本地文件示例，不支持ie8
                 obj.preview(function(index, file, result){
-                    $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                    $('#demo2').prepend('<img style="width: 200px;height: 200px" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                    if ($('#demo2').children('img').length>=3){
+                        $("#test2").hide();
+                    }
                 });
+
             }
             ,done: function(res){
 

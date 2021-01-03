@@ -31,7 +31,7 @@
 			"icon": "layui-icon layui-icon-console",
 			"type": 1,
 			"openType": "_iframe",
-			"href": "http://www.baidu.com"
+			"href": "view/raising/review.html"
 		}]
 	},
 	{
@@ -118,7 +118,7 @@
 	},
 	{
 		"id": "news",
-		"title": "消息管理",
+		"title": "留言查看",
 		"icon": "layui-icon layui-icon-face-cry",
 		"type": 1,
 		"href": "view/news/news.html"
