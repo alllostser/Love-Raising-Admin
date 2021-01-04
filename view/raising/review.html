@@ -54,8 +54,8 @@
 </script>
 
 <script type="text/html" id="user-bar">
-    <button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>
-<!--    <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i></button>-->
+    <button class="pear-btn pear-btn-success pear-btn-sm" lay-event="pass"><i class="">Pass</i></button>
+    <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="fail"><i class="">Fail</i></button>
 </script>
 
 
@@ -99,7 +99,7 @@
                     title: '标题',
                     field: 'raisingTitle',
                     align: 'center',
-                    width: 250
+                    //width: 250
                 },
                 {
                     title: '主图',
@@ -121,17 +121,18 @@
                     title: '筹款人',
                     field: 'raisingName',
                     align: 'center',
-                    //width: 100
+                    width: 100
                 },
                 {
                     title: '筹款金额',
                     field: 'targetAmount',
                     align: 'center',
-                    //width: 80,
+                    width: 100,
                 },
                 {
                     title: '已筹金额',
                     field: 'currentAmount',
+                    width: 100,
                     align: 'center'
                 },
                 {
@@ -152,7 +153,7 @@
                     }
                 },
                 {
-                    title: '注册',
+                    title: '申请时间',
                     field: 'createTime',
                     align: 'center',
                     templet: '#user-createTime'
@@ -161,7 +162,7 @@
                     title: '操作',
                     toolbar: '#user-bar',
                     align: 'center',
-                    width: 130
+                    width: 150
                 }
             ]
         ]
@@ -188,10 +189,10 @@
         });
 
         table.on('tool(user-table)', function(obj) {
-            if (obj.event === 'remove') {
-                window.remove(obj);
-            } else if (obj.event === 'edit') {
-                window.edit(obj);
+            if (obj.event === 'pass') {
+                window.pass(obj);
+            } else if (obj.event === 'fail') {
+                window.fail(obj);
             }
         });
 
@@ -234,17 +235,8 @@
             })
         });
 
-        window.add = function() {
-            layer.open({
-                type: 2,
-                title: '新增',
-                shade: 0.1,
-                area: ['800px', '700px'],
-                content: MODULE_PATH + 'add.html'
-            });
-        }
 
-        window.edit = function(obj) {
+        window.pass = function(obj) {
             var data = obj.data
             json = JSON.stringify(data);
             layer.open({
@@ -257,17 +249,24 @@
                 content: MODULE_PATH + 'edit.html'
             });
         }
-        window.remove = function(obj) {
-            layer.confirm('确定要删除该用户', {
+        window.fail = function(obj) {
+            var data = obj.data
+            json = JSON.stringify(data);
+            layer.confirm('确认打回？',{
                 icon: 3,
                 title: '提示'
-            }, function(index) {
+            },function (index) {
                 layer.close(index);
                 let loading = layer.load();
                 $.ajax({
-                    url: hostUrl + "/admin/delete.do?ids=" + obj.data['id'],
+                    url:hostUrl+'/raisinginfo/update.do',
                     dataType: 'json',
-                    type: 'delete',
+                    contentType:'application/json',
+                    data:JSON.stringify({
+                        id:data.id,
+                        statusId:6
+                    }),
+                    type: 'post',
                     success: function(result) {
                         layer.close(loading);
                         if (result.data) {
@@ -277,59 +276,16 @@
                             },function() {
                                 obj.del();
                             });
-                        } else {
-                            layer.msg(result.msg, {
-                                icon: 2,
-                                time: 1000
-                            });
-                        }
-                    }
+                    }else {
+                        layer.msg(result.msg, {
+                            icon: 2,
+                            time: 1000
+                        });
+                    }}
                 })
             });
         }
 
-        window.batchRemove = function(obj) {
-
-            var checkIds = common.checkField(obj,'id');
-            console.log(checkIds)
-
-            if (checkIds === "") {
-                layer.msg("未选中数据", {
-                    icon: 3,
-                    time: 1000
-                });
-                return false;
-            }
-
-            layer.confirm('确定要删除这些用户', {
-                icon: 3,
-                title: '提示'
-            }, function(index) {
-                layer.close(index);
-                let loading = layer.load();
-                $.ajax({
-                    url: hostUrl + "/admin/delete.do?ids=" + checkIds,
-                    dataType: 'json',
-                    type: 'delete',
-                    success: function(result) {
-                        layer.close(loading);
-                        if (result.data) {
-                            layer.msg(result.msg, {
-                                icon: 1,
-                                time: 1000
-                            }, function() {
-                                table.reload('user-table');
-                            });
-                        } else {
-                            layer.msg(result.msg, {
-                                icon: 2,
-                                time: 1000
-                            });
-                        }
-                    }
-                })
-            });
-        }
 
         window.refresh = function(param) {
             table.reload('user-table');
