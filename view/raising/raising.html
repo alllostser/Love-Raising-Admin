@@ -97,6 +97,7 @@
 		let common = layui.common;
 		//let MODULE_PATH = "/";
 		const context = layui.context;
+		const token = sessionStorage.getItem('token');
 		var hostUrl = context.get("hostUrl")
 		let cols = [
 			[{
@@ -182,6 +183,7 @@
 				pageName: 'current' ,//页码的参数名称，默认：page
 				limitName: 'size' //每页数据量的参数名，默认：limit
 			},
+			headers:{'token':token},
 			method:'get',
 			page: true,
 			cols: cols,
@@ -217,6 +219,7 @@
 			table.reload('user-table', {
 				url: hostUrl+'/raisinginfo/list.do',
 				method:"get",
+				headers:{'token':token},
 				page: {
 					current: 1
 				},
@@ -236,6 +239,7 @@
 			$.ajax({
 				url: hostUrl + "/raisinginfo/updateStatus/" + this.value+".do",
 				dataType: 'json',
+				headers:{'token':token},
 				type: 'get',
 				success: function(result) {
 				}
@@ -278,6 +282,7 @@
 					url: hostUrl + "/raisinginfo/delete.do?ids=" + obj.data['id'],
 					dataType: 'json',
 					type: 'delete',
+					headers:{'token':token},
 					success: function(result) {
 						layer.close(loading);
 						if (result.data) {
@@ -320,6 +325,7 @@
 				$.ajax({
 					url: hostUrl + "/raisinginfo/delete.do?ids=" + checkIds,
 					dataType: 'json',
+					headers:{'token':token},
 					type: 'delete',
 					success: function(result) {
 						layer.close(loading);

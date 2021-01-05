@@ -106,6 +106,7 @@ layui.use(['form','jquery','laydate','context'],function(){
     let $ = layui.jquery;
     let laydate = layui.laydate;
     const context = layui.context;
+    const token = sessionStorage.getItem('token');
     var hostUrl = context.get("hostUrl")
     //日期
     laydate.render({
@@ -142,6 +143,7 @@ layui.use(['form','jquery','laydate','context'],function(){
             url:hostUrl+'/admin/update.do',
             data:JSON.stringify(data.field),
             dataType:'json',
+            headers:{'token':token},
             contentType:'application/json',
             type:'post',
             success:function(result){

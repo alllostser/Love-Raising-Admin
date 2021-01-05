@@ -110,6 +110,7 @@
 				let common = layui.common;
 				let MODULE_PATH = "operate/";
 				const context = layui.context;
+				const token = sessionStorage.getItem('token');
 				var hostUrl = context.get("hostUrl")
 				let cols = [
 					[{
@@ -167,7 +168,6 @@
 						},
 						{
 							title: '余额',
-							title: '余额',
 							field: 'remainingSum',
 							align: 'center',
 						},
@@ -193,6 +193,7 @@
 						pageName: 'current' ,//页码的参数名称，默认：page
 						limitName: 'size' //每页数据量的参数名，默认：limit
 					},
+					headers:{'token':token},
 					method:'get',
 					page: true,
 					cols: cols,
@@ -231,6 +232,7 @@
 						page: {
 							current: 1
 						},
+						headers:{'token':token},
 						where: {
 							userName: data.field.userName,
 							sex:data.field.sex,
@@ -249,6 +251,7 @@
 					$.ajax({
 						url: hostUrl + "/admin/updateStatus/" + this.value+".do",
 						dataType: 'json',
+						headers:{'token':token},
 						type: 'get',
 						success: function(result) {
 						}
@@ -288,6 +291,7 @@
 						$.ajax({
 							url: hostUrl + "/admin/delete.do?ids=" + obj.data['id'],
 							dataType: 'json',
+							headers:{'token':token},
 							type: 'delete',
 							success: function(result) {
 								layer.close(loading);
@@ -331,6 +335,7 @@
 						$.ajax({
 							url: hostUrl + "/admin/delete.do?ids=" + checkIds,
 							dataType: 'json',
+							headers:{'token':token},
 							type: 'delete',
 							success: function(result) {
 								layer.close(loading);

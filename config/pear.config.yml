@@ -35,37 +35,37 @@ theme:
   ## 默认主题色，对应 colors 配置中的 ID 标识
   defaultColor: "2"
   ## 默认的菜单主题 dark-theme 黑 / light-theme 白
-  defaultMenu: "dark-theme"
+  defaultMenu: "light-theme"
   ## 是否允许用户切换主题，false 时关闭自定义主题面板
-  allowCustom: true
+  allowCustom: false
 ## 供选择的主题色配置列表
 colors:
-- id: "1"
-  color: "#FF5722"
+#- id: "1"
+#  color: "#FF5722"
 - id: "2"
   color: "#5FB878"
-- id: "3"
-  color: "#1E9FFF"
-- id: "4"
-  color: "#FFB800"
-- id: "5"
-  color: "darkgray"
-- id: "6"
-  color: "red"
+#- id: "3"
+#  color: "#1E9FFF"
+#- id: "4"
+#  color: "#FFB800"
+#- id: "5"
+#  color: "darkgray"
+#- id: "6"
+#  color: "red"
 ## 主题面板的链接列表配置
 links:
-- icon: "layui-icon layui-icon-website"
-  title: "官方网站"
-  href: "http://www.pearadmin.com"
-- icon: "layui-icon layui-icon-read"
-  title: "开发文档"
-  href: "http://www.pearadmin.com/doc/"
-- icon: "layui-icon layui-icon-fonts-code"
-  title: "开源地址"
-  href: "https://gitee.com/pear-admin/Pear-Admin-Layui"
-- icon: "layui-icon layui-icon-survey"
-  title: "问答社区"
-  href: "http://forum.pearadmin.com/"
+#- icon: "layui-icon layui-icon-website"
+#  title: "官方网站"
+#  href: "http://www.pearadmin.com"
+#- icon: "layui-icon layui-icon-read"
+#  title: "开发文档"
+#  href: "http://www.pearadmin.com/doc/"
+#- icon: "layui-icon layui-icon-fonts-code"
+#  title: "开源地址"
+#  href: "https://gitee.com/pear-admin/Pear-Admin-Layui"
+#- icon: "layui-icon layui-icon-survey"
+#  title: "问答社区"
+#  href: "http://forum.pearadmin.com/"
 ## 其他配置
 other:
   ## 主页默认加载动画时长

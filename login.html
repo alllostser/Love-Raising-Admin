@@ -40,12 +40,13 @@
 		<script src="component/layui/layui.js"></script>
 		<script src="component/pear/pear.js"></script>
 		<script>
-			layui.use(['form', 'element', 'jquery', 'button', 'popup'], function() {
+			layui.use(['form', 'element', 'jquery', 'button', 'popup','layer'], function() {
 				var form = layui.form;
 				var element = layui.element;
 				var button = layui.button;
 				var popup = layui.popup;
 				var $ = layui.jquery;
+				var layer = layui.layer
 
                 // 登 录 提 交
 				form.on('submit(login)', function(data) {
@@ -56,9 +57,15 @@
 						dataType: 'json',
 						type: 'post',
 						success: function(result) {
-									popup.success("登录成功", function() {
-										location.href = "index.html"
-									});
+							if (result.code == 200){
+								sessionStorage.setItem('token',result.token);
+								popup.success(result.message, function() {
+									location.href = "index.html"
+								});
+							}else {
+								layer.msg(result.message)
+							}
+
 							console.log(result)
 						}
 					})
