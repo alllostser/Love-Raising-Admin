@@ -14,25 +14,9 @@
         <form class="layui-form" action="">
             <div class="layui-form-item">
                 <div class="layui-form-item layui-inline">
-                    <label class="layui-form-label">用户名</label>
+                    <label class="layui-form-label">公告标题</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="userName" placeholder="" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item layui-inline">
-                    <label class="layui-form-label">性别</label>
-                    <div class="layui-input-inline">
-                        <select name="sex"  lay-search>
-                            <option value=""></option>
-                            <option value="男">男</option>
-                            <option value="女">女</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-form-item layui-inline">
-                    <label class="layui-form-label">邮箱</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="email" placeholder="" class="layui-input">
+                        <input type="text" name="newsTitle"  autocomplete="off"  class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item layui-inline">
@@ -111,70 +95,27 @@
         let MODULE_PATH = "../notice/";
         const context = layui.context;
         var hostUrl = context.get("hostUrl")
+        const token = sessionStorage.getItem('token');
         let cols = [
             [{
                 type: 'checkbox'
             },
                 {
-                    title: '用户名',
-                    field: 'userName',
+                    title: '公告标题',
+                    field: 'newsTitle',
                     align: 'center',
-                    width: 100
+                    width: 300
                 },
                 {
-                    title: '姓名',
-                    field: 'realName',
+                    title: '公告内容',
+                    field: 'newsDescription',
                     align: 'center'
                 },
                 {
-                    title: '性别',
-                    field: 'sex',
+                    title: '创建时间',
+                    field: 'creatTime',
                     align: 'center',
-                    width: 80,
-                    templet: '#user-sex'
-                },
-                {
-                    title: '电话',
-                    field: 'telephone',
-                    align: 'center'
-                },
-                {
-                    title: '邮箱',
-                    field: 'email',
-                    align: 'center',
-                },
-                {
-                    title: '生日',
-                    field: 'birthday',
-                    align: 'center',
-                },
-                {
-                    title: '身份证号',
-                    field: 'idNumber',
-                    align: 'center',
-                },
-                {
-                    title: '状态',
-                    field: 'status',
-                    align: 'center',
-                    templet: '#user-enable'
-                },
-                {
-                    title: '权限',
-                    field: 'roleId',
-                    align: 'center',
-                    templet: '#user-login'
-                },
-                {
-                    title: '余额',
-                    field: 'remainingSum',
-                    align: 'center',
-                },
-                {
-                    title: '注册时间',
-                    field: 'createTime',
-                    align: 'center',
-                    templet: '#user-createTime'
+                    width: 150
                 },
                 {
                     title: '操作',
@@ -187,7 +128,8 @@
         console.log(hostUrl)
         table.render({
             elem: '#user-table',
-            url: hostUrl+'/admin/list.do',
+            url: hostUrl+'/notice/list.do',
+            headers:{'token':token},
             request: {
                 pageName: 'current' ,//页码的参数名称，默认：page
                 limitName: 'size' //每页数据量的参数名，默认：limit
@@ -225,15 +167,14 @@
 
         form.on('submit(user-query)', function(data) {
             table.reload('user-table', {
-                url: hostUrl+'/admin/list.do',
+                url: hostUrl+'/notice/list.do',
                 method:"get",
+                headers: {'token':token},
                 page: {
                     current: 1
                 },
                 where: {
-                    userName: data.field.userName,
-                    sex:data.field.sex,
-                    email:data.field.email
+                    newsTitle: data.field.newsTitle,
                 }
             })
             // table.reload('user-table', {
@@ -259,7 +200,7 @@
                 type: 2,
                 title: '新增',
                 shade: 0.1,
-                area: ['800px', '700px'],
+                area: ['90%', '90%'],
                 content: MODULE_PATH + 'add.html'
             });
         }
@@ -273,7 +214,7 @@
                 maxmin:true,
                 shadeClose: true,
                 shade: 0.1,
-                area: ['800px', '700px'],
+                area: ['90%', '90%'],
                 content: MODULE_PATH + 'edit.html'
             });
         }
@@ -285,9 +226,10 @@
                 layer.close(index);
                 let loading = layer.load();
                 $.ajax({
-                    url: hostUrl + "/admin/delete.do?ids=" + obj.data['id'],
+                    url: hostUrl + "/notice/delete.do?ids=" + obj.data['id'],
                     dataType: 'json',
                     type: 'delete',
+                    headers:{'token':token},
                     success: function(result) {
                         layer.close(loading);
                         if (result.data) {
@@ -328,9 +270,10 @@
                 layer.close(index);
                 let loading = layer.load();
                 $.ajax({
-                    url: hostUrl + "/admin/delete.do?ids=" + checkIds,
+                    url: hostUrl + "/notice/delete.do?ids=" + checkIds,
                     dataType: 'json',
                     type: 'delete',
+                    headers:{'token':token},
                     success: function(result) {
                         layer.close(loading);
                         if (result.data) {

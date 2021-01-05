@@ -27,7 +27,7 @@ tab:
   tabMax: "30"
   ## 默认选项卡数据
   index:
-    id: "0" ## 标识 ID , 建议与菜单项中的 ID 一致
+    id: "1" ## 标识 ID , 建议与菜单项中的 ID 一致
     href: "view/console/console1.html" ## 页面地址
     title: "首页" ## 标题
 ## 主题配置

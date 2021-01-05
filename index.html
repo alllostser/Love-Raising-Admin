@@ -28,17 +28,17 @@
 				<div id="control" class="layui-layout-control"></div>
 				<ul class="layui-nav layui-layout-right">
 					<li class="layui-nav-item layui-hide-xs"><a href="#" class="fullScreen layui-icon layui-icon-screen-full"></a></li>
-					<li class="layui-nav-item layui-hide-xs"><a href="http://www.pearadmin.com" class="layui-icon layui-icon-website"></a></li>
+<!--					<li class="layui-nav-item layui-hide-xs"><a href="http://www.pearadmin.com" class="layui-icon layui-icon-website"></a></li>-->
 					<li class="layui-nav-item">
 						<!-- 头 像 -->
 						<a href="javascript:;">
-							<img src="admin/images/avatar.jpg" class="layui-nav-img">
-							就眠仪式
+<!--							<img src="admin/images/avatar.jpg" class="layui-nav-img">-->
+							欢迎您，用户：<span class="username"></span>
 						</a>
 						<!-- 功 能 菜 单 -->
 						<dl class="layui-nav-child">
-							<dd><a user-menu-url="view/system/person.html" user-menu-id="5555" user-menu-title="基本资料">基本资料</a></dd>
-							<dd><a href="login.html">注销登录</a></dd>
+							<dd><a class="updatepassword">修改密码</a></dd>
+							<dd><a class="loginout">注销登录</a></dd>
 						</dl>
 					</li>
 					<!-- 主 题 配 置 -->
@@ -92,6 +92,21 @@
 				// 你可以通过 admin.setConfigPath 方法修改配置文件位置
 				admin.setConfigPath("config/pear.config.yml");
 				admin.render();
+				$(".username").html(sessionStorage.getItem("username"))
+				$(".updatepassword").click(function (){
+					confirm(function (){
+
+					})
+				});
+				$(".loginout").click(function (){
+					layer.confirm('确定要退出登录吗？', {
+						icon: 3,
+						title: '提示'
+					}, function(index) {
+						sessionStorage.clear();
+						window.location.href = "login.html"
+					})
+				})
 			})
 		</script>
 	</body>

@@ -15,29 +15,29 @@
 </head>
 <body class="pear-container">
 <div class="layui-card">
-    <div class="layui-card-body">
-        <form class="layui-form" action="">
-            <div class="layui-form-item">
-                <label class="layui-form-label">卡片标题</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="realName" placeholder="" class="layui-input">
-                </div>
-                <label class="layui-form-label">卡片名称</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="username" placeholder="" class="layui-input">
-                </div>
+<!--    <div class="layui-card-body">-->
+<!--        <form class="layui-form" action="">-->
+<!--            <div class="layui-form-item">-->
+<!--                <label class="layui-form-label">卡片标题</label>-->
+<!--                <div class="layui-input-inline">-->
+<!--                    <input type="text" name="realName" placeholder="" class="layui-input">-->
+<!--                </div>-->
+<!--                <label class="layui-form-label">卡片名称</label>-->
+<!--                <div class="layui-input-inline">-->
+<!--                    <input type="text" name="username" placeholder="" class="layui-input">-->
+<!--                </div>-->
 
-                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="user-query">
-                    <i class="layui-icon layui-icon-search"></i>
-                    查询
-                </button>
-                <button type="reset" class="pear-btn pear-btn-md">
-                    <i class="layui-icon layui-icon-refresh"></i>
-                    重置
-                </button>
-            </div>
-        </form>
-    </div>
+<!--                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="user-query">-->
+<!--                    <i class="layui-icon layui-icon-search"></i>-->
+<!--                    查询-->
+<!--                </button>-->
+<!--                <button type="reset" class="pear-btn pear-btn-md">-->
+<!--                    <i class="layui-icon layui-icon-refresh"></i>-->
+<!--                    重置-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
 </div>
 <div class="layui-card">
     <div class="layui-card-header">
@@ -60,32 +60,12 @@
 </script>
 
 <script type="text/html" id="user-bar">
-    <button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>
+<!--    <button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>-->
     <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i></button>
 </script>
 
-<script type="text/html" id="user-enable">
-    <input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable" {{ d.enable == 0 ? 'checked' : '' }}>
-</script>
-
-<script type="text/html" id="user-sex">
-    {{#if (d.sex == 1) { }}
-    <span>男</span>
-    {{# }else if(d.sex == 2){ }}
-    <span>女</span>
-    {{# } }}
-</script>
-
-<script type="text/html" id="user-login">
-    {{#if (d.login == 0) { }}
-    <span>在线</span>
-    {{# }else if(d.sex == 1){ }}
-    <span>离线</span>
-    {{# } }}
-</script>
-
 <script type="text/html" id="user-createTime">
-    {{layui.util.toDateString(d.createTime, 'yyyy-MM-dd')}}
+    {{layui.util.toDateString(d.creatTime, 'yyyy-MM-dd')}}
 </script>
 <script src="../../component/layui/layui.js"></script>
 <script src="../../component/pear/pear.js"></script>
@@ -105,16 +85,8 @@
 
         table.render({
             elem:'#user-table',
-            url:hostUrl+'/message/selectMessageInPage.do',
-            request: {
-                pageName: 'currentPage' ,//页码的参数名称，默认：page
-                limitName: 'pageSize' //每页数据量的参数名，默认：limit
-            },
-            headers:{'token':token},
             cols: [
-                [{
-                    type: 'checkbox'
-                },
+                [
                     {
                         title: '用户名',
                         field: 'name',
@@ -122,58 +94,23 @@
                         width: 100
                     },
                     {
-                        title: '姓名',
-                        field: 'realName',
-                        align: 'center'
-                    },
-                    {
-                        title: '性别',
-                        field: 'sex',
-                        align: 'center',
-                        width: 80,
-                        templet: '#user-sex'
-                    },
-                    {
                         title: '电话',
                         field: 'telephone',
-                        align: 'center'
+                        align: 'center',
+                        width: 150
+
                     },
                     {
-                        title: '邮箱',
-                        field: 'email',
+                        title: '信息',
+                        field: 'message',
                         align: 'center',
                     },
+
                     {
-                        title: '生日',
-                        field: 'birthday',
+                        title: '消息日期',
+                        field: 'creatTime',
                         align: 'center',
-                    },
-                    {
-                        title: '身份证号',
-                        field: 'idNumber',
-                        align: 'center',
-                    },
-                    {
-                        title: '状态',
-                        field: 'status',
-                        align: 'center',
-                        templet: '#user-enable'
-                    },
-                    {
-                        title: '权限',
-                        field: 'roleId',
-                        align: 'center',
-                        templet: '#user-login'
-                    },
-                    {
-                        title: '余额',
-                        field: 'remainingSum',
-                        align: 'center',
-                    },
-                    {
-                        title: '注册时间',
-                        field: 'createTime',
-                        align: 'center',
+                        width: 150,
                         templet: '#user-createTime'
                     },
                     {
@@ -183,8 +120,54 @@
                         width: 130
                     }
                 ]
-            ]
+            ],
+            url:hostUrl+'/message/selectMessageInPage.do',
+            request: {
+                pageName: 'currentPage' ,//页码的参数名称，默认：page
+                limitName: 'pageSize' //每页数据量的参数名，默认：limit
+            },
+            headers:{'token':token},
+            page:true
+
         })
+
+        table.on('tool(user-table)', function(obj) {
+            if (obj.event === 'remove') {
+                window.remove(obj);
+            }
+        });
+
+        window.remove = function(obj) {
+            layer.confirm('确定要删除该记录？', {
+                icon: 3,
+                title: '提示'
+            }, function(index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: hostUrl + "/message/delete.do?id=" + obj.data['id'],
+                    dataType: 'json',
+                    type: 'delete',
+                    headers:{'token':token},
+                    success: function(result) {
+                        layer.close(loading);
+                        if (result.data) {
+                            layer.msg(result.msg, {
+                                icon: 1,
+                                time: 1000
+                            },function() {
+                                obj.del();
+                            });
+                        } else {
+                            layer.msg(result.msg, {
+                                icon: 2,
+                                time: 1000
+                            });
+                        }
+                    }
+                })
+            });
+        }
 
     })
 </script>

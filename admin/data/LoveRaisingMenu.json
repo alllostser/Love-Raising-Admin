@@ -1,10 +1,4 @@
-[{
-	"id": 0,
-	"title": "主页",
-	"type": 1,
-	"icon": "layui-icon layui-icon-console",
-	"href": "view/console/console1.html"
-	},
+[
 	{
 		"id":"raising",
 		"title": "筹款管理",
@@ -95,13 +89,6 @@
 			"type": 1,
 			"openType": "_iframe",
 			"href": "view/notice/notice.html"
-		}, {
-			"id": 702,
-			"title": "空白页面",
-			"icon": "layui-icon layui-icon-face-smile",
-			"type": 1,
-			"openType": "_iframe",
-			"href": "view/system/space.html"
 		}]
 	}
 ]
