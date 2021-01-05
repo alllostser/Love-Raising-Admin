@@ -41,7 +41,7 @@
 </div>
 <div class="layui-card">
     <div class="layui-card-header">
-        卡片列表
+        消息列表
     </div>
     <div class="layui-card-body">
         <table id="user-table" lay-filter="user-table"></table>
@@ -92,17 +92,98 @@
 <script src="../../config/api.config.js"></script>
 
 <script>
-    layui.use(['table','form','jquery','card'],function () {
+    layui.use(['table','form','jquery','card','context'],function () {
         let table = layui.table;
         let form = layui.form;
         let $ = layui.jquery;
         let card = layui.card;
+        const context = layui.context;
+        const token = sessionStorage.getItem('token');
+        var hostUrl = context.get("hostUrl")
 
         let MODULE_PATH = "/system/user/";
 
-        card.render({
+        table.render({
             elem:'#user-table',
-            url:'../../admin/data/card.json',
+            url:hostUrl+'/message/selectMessageInPage.do',
+            request: {
+                pageName: 'currentPage' ,//页码的参数名称，默认：page
+                limitName: 'pageSize' //每页数据量的参数名，默认：limit
+            },
+            headers:{'token':token},
+            cols: [
+                [{
+                    type: 'checkbox'
+                },
+                    {
+                        title: '用户名',
+                        field: 'name',
+                        align: 'center',
+                        width: 100
+                    },
+                    {
+                        title: '姓名',
+                        field: 'realName',
+                        align: 'center'
+                    },
+                    {
+                        title: '性别',
+                        field: 'sex',
+                        align: 'center',
+                        width: 80,
+                        templet: '#user-sex'
+                    },
+                    {
+                        title: '电话',
+                        field: 'telephone',
+                        align: 'center'
+                    },
+                    {
+                        title: '邮箱',
+                        field: 'email',
+                        align: 'center',
+                    },
+                    {
+                        title: '生日',
+                        field: 'birthday',
+                        align: 'center',
+                    },
+                    {
+                        title: '身份证号',
+                        field: 'idNumber',
+                        align: 'center',
+                    },
+                    {
+                        title: '状态',
+                        field: 'status',
+                        align: 'center',
+                        templet: '#user-enable'
+                    },
+                    {
+                        title: '权限',
+                        field: 'roleId',
+                        align: 'center',
+                        templet: '#user-login'
+                    },
+                    {
+                        title: '余额',
+                        field: 'remainingSum',
+                        align: 'center',
+                    },
+                    {
+                        title: '注册时间',
+                        field: 'createTime',
+                        align: 'center',
+                        templet: '#user-createTime'
+                    },
+                    {
+                        title: '操作',
+                        toolbar: '#user-bar',
+                        align: 'center',
+                        width: 130
+                    }
+                ]
+            ]
         })
 
     })
